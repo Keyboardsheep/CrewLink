@@ -37,7 +37,7 @@ const store = new Store<ISettings>({
 		'1.1.5': store => {
 			const serverURL = store.get('serverURL');
 			if (serverURL === 'http://54.193.94.35:9736') {
-				store.set('serverURL', 'https://crewl.ink');
+				store.set('serverURL', 'https://neb-crewlink-server.herokuapp.com');
 			}
 		},
 		'1.1.6': store => {
@@ -68,7 +68,7 @@ const store = new Store<ISettings>({
 		},
 		serverURL: {
 			type: 'string',
-			default: 'https://crewl.ink',
+			default: 'https://neb-crewlink-server.herokuapp.com',
 			format: 'uri'
 		},
 		pushToTalkShortcut: {
@@ -113,7 +113,7 @@ const store = new Store<ISettings>({
 
 store.onDidChange('serverURL', (newUrl) => {
 	if (newUrl === 'http://54.193.94.35:9736') {
-		store.set('serverURL', 'https://crewl.ink');
+		store.set('serverURL', 'https://neb-crewlink-server.herokuapp.com');
 	}
 });
 
@@ -178,7 +178,7 @@ const Settings: React.FC<SettingsProps> = function ({ open, onClose }: SettingsP
 		});
 	}, []);
 	
-	let overlay = remote.getGlobal('overlay');
+	const overlay = remote.getGlobal('overlay');
 	if (overlay) {
 		overlay.webContents.send('overlaySettings', settings);
 	}
@@ -333,11 +333,11 @@ const Settings: React.FC<SettingsProps> = function ({ open, onClose }: SettingsP
 						action: ['overlayPosition', ev.target.value]
 					});
 				}}>
-				  <option value="top" selected={settings.overlayPosition == "top"}>Top Center</option>
-				  <option value="bottom_left" selected={settings.overlayPosition == "bottom_left"}>Bottom Left</option>
+				  <option value="top" selected={settings.overlayPosition == 'top'}>Top Center</option>
+				  <option value="bottom_left" selected={settings.overlayPosition == 'bottom_left'}>Bottom Left</option>
 				</select>			
 			</div>
-			<div className="form-control m" style={{ color: '#f72f5e', paddingTop: "10px" }} onClick={() => setSettings({
+			<div className="form-control m" style={{ color: '#f72f5e', paddingTop: '10px' }} onClick={() => setSettings({
 				type: 'setOne',
 				action: ['compactOverlay', !settings.compactOverlay]
 			})}>

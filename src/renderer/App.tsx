@@ -8,8 +8,9 @@ import { GameStateContext, SettingsContext } from './contexts';
 
 let appVersion = '';
 if (typeof window !== 'undefined' && window.location) {
-	const query = new URLSearchParams(window.location.search.substring(1));
-	appVersion = (' v' + query.get('version')) || '';
+	// const query = new URLSearchParams(window.location.search.substring(1));
+	appVersion = (' v1.1.6-b2') || '';
+	// appVersion = (' v' + query.get('version')) || '';
 }
 
 
@@ -25,7 +26,7 @@ export default function App() {
 		microphone: 'Default',
 		speaker: 'Default',
 		pushToTalk: false,
-		serverURL: 'https://crewl.ink',
+		serverURL: 'https://neb-crewlink-server.herokuapp.com',
 		pushToTalkShortcut: 'V',
 		deafenShortcut: 'RControl',
 		offsets: {
@@ -42,7 +43,7 @@ export default function App() {
 	useEffect(() => {
 		const onOpen = (_: Electron.IpcRendererEvent, isOpen: boolean) => {
 			setState(isOpen ? AppState.VOICE : AppState.MENU);
-			let overlay = remote.getGlobal('overlay');
+			const overlay = remote.getGlobal('overlay');
 			if (overlay) {
 				overlay.webContents.send('overlayState', 'MENU');
 			}
@@ -50,7 +51,7 @@ export default function App() {
 		};
 		const onState = (_: Electron.IpcRendererEvent, newState: AmongUsState) => {
 			setGameState(newState);
-			let overlay = remote.getGlobal('overlay');
+			const overlay = remote.getGlobal('overlay');
 			if (overlay) {
 				overlay.webContents.send('overlayGameState', newState);
 			}
